@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: sb-webflux
+  r2dbc:
+    url: r2dbc:h2:mem:///testDb
+    username: admin
+    password: test
+  sql:
+    init:
+      mode: embedded
+server:
+  error:
+    include-binding-errors: always
+    include-message: always

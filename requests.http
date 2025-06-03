@@ -1,0 +1,23 @@
+
+POST http://localhost:8080/users/create
+Content-Type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "tech.abdiz@gmail.com",
+    "username": "tech.abdiz",
+    "password": "123456789"
+}
+
+###
+
+GET http://localhost:8080/users/abcd-efigds-dsad
+
+
+###
+
+GET http://localhost:8080/users
+
+
+###
