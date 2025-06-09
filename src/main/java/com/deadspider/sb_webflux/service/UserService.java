@@ -1,11 +1,15 @@
 package com.deadspider.sb_webflux.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.deadspider.sb_webflux.models.User;
+import com.deadspider.sb_webflux.models.UserDTO;
 import com.deadspider.sb_webflux.repo.UserRepository;
 
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -14,8 +18,18 @@ public class UserService {
 
     private UserRepository repo;
 
-    public Mono<User> save(User user) { 
-        return repo.save(user);
+    public Mono<UserDTO> save(Mono<UserDTO> user) { 
+        return user.mapNotNull(User::fromDTO)
+            .flatMap(repo::save)
+                .mapNotNull(UserDTO::fromEntity);
+    }
+
+    public Mono<UserDTO> getById(String id) { 
+        return repo.findById(UUID.fromString(id)).map(UserDTO::fromEntity);
+    }
+
+    public Flux<UserDTO> getAllUsers() { 
+        return repo.findAll().map(UserDTO::fromEntity);
     }
 
 }

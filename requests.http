@@ -3,16 +3,16 @@ POST http://localhost:8080/users/create
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "tech.abdiz@gmail.com",
-    "username": "tech.abdiz",
-    "password": "123456789"
+    "firstName": "Megan",
+    "lastName": "Fox",
+    "email": "megan.fox@gmail.com",
+    "username": "mega_fox",
+    "password": "99999999"
 }
 
 ###
 
-GET http://localhost:8080/users/abcd-efigds-dsad
+GET http://localhost:8080/users/4d650993-5646-4246-a42b-a39cfdef450b
 
 
 ###
