@@ -1,5 +1,6 @@
 package com.deadspider.sb_webflux.service;
 
+import java.time.Duration;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -29,7 +30,9 @@ public class UserService {
     }
 
     public Flux<UserDTO> getAllUsers() { 
-        return repo.findAll().map(UserDTO::fromEntity);
+        return repo.findAll()
+            .delayElements(Duration.ofMillis(500))
+        .map(UserDTO::fromEntity);
     }
 
 }
