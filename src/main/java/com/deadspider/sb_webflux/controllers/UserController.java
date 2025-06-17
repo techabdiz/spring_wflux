@@ -2,6 +2,7 @@ package com.deadspider.sb_webflux.controllers;
 
 import java.net.URI;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("users")
@@ -34,10 +37,18 @@ public class UserController {
         //user.subscribe(data->System.out.println("got user: " + data));
     }
 
+    @GetMapping(value = "paged", produces=MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<UserDTO> getMethodName(@RequestParam(name = "page", defaultValue = "0") int page, 
+                                                    @RequestParam(name = "limit", defaultValue = "10") int limit ) {
+        return service.findAllPageable(page, limit);
+    }
+    
+
 
     @GetMapping("{id}")
     public Mono<ResponseEntity<UserDTO>> get(@PathVariable("id") String id) { 
-        return service.getById(id).map(data->ResponseEntity.ok().body(data));
+        return service.getById(id).map(data->ResponseEntity.ok().body(data))
+        .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
     @GetMapping(produces=MediaType.TEXT_EVENT_STREAM_VALUE)

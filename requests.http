@@ -10,14 +10,32 @@ GET http://localhost:8080/users
 
 ###
 
+GET http://localhost:8080/users/paged?page=0&limit=3
+
 ###
 POST http://localhost:8080/users/create
 Content-Type: application/json
 
-{
+{   
+    "id": "e9467f1e-6999-4acf-90ba-8d2b27cfd84b",
     "firstName": "Megan",
     "lastName": "Fox",
     "email": "megan.fox@gmail.com",
     "username": "mega_fox",
     "password": "99999999"
+}
+
+###
+## invalid request
+###
+POST http://localhost:8080/users/create
+Content-Type: application/json
+
+{   
+    "id": "e9467f1e-6999-4acf-90ba-8d2b27cfd84b",
+    "firstName": "Secure",
+    "lastName": "User",
+    "email": "encrypt_pass@gmail.com",
+    "username": "encrypted_password",
+    "password": "enc234555"
 }
