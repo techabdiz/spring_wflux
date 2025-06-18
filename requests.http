@@ -1,8 +1,13 @@
+
+POST http://localhost:8080/auth/login
+
+{
+    "username": "tech.abdiz",
+    "password": "123456"
+}
+
 ###
-
-GET http://localhost:8080/users/4d650993-5646-4246-a42b-a39cfdef450b
-
-
+GET http://localhost:8080/users/4d650993-5646-4246-a42b-a39cfdef450-b
 ###
 
 GET http://localhost:8080/users
@@ -37,5 +42,5 @@ Content-Type: application/json
     "lastName": "User",
     "email": "encrypt_pass@gmail.com",
     "username": "encrypted_password",
-    "password": "enc234555"
+    "password": ""
 }

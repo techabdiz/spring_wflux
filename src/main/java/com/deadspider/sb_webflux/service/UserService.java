@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService implements ReactiveUserDetailsService {
 
     private UserRepository repo;
     private PasswordEncoder encoder;
@@ -46,6 +48,14 @@ public class UserService {
         return repo.findAll()
             .delayElements(Duration.ofMillis(500))
         .map(UserDTO::fromEntity);
+    }
+
+    @Override
+    public Mono<UserDetails> findByUsername(String username) {
+        return repo.findByUsername(username).map(user->{
+            return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
+                .password(user.getPassword()).build();
+        });
     }
 
 }

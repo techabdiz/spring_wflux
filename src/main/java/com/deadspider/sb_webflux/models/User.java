@@ -1,10 +1,14 @@
 package com.deadspider.sb_webflux.models;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User  {
 
     @Id
     private UUID id;
@@ -43,5 +47,6 @@ public class User {
             .email(dto.getEmail())
         .build();*/
     }
+
 
 }

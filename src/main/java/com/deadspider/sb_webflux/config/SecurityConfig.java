@@ -18,7 +18,7 @@ public class SecurityConfig {
     SecurityWebFilterChain secFilter(ServerHttpSecurity sec) { 
         return sec
             .authorizeExchange(exchange->{
-                exchange.pathMatchers(HttpMethod.POST, "/users/create")
+                exchange.pathMatchers(HttpMethod.POST, "/users/create", "/auth/login")
                     .permitAll()
                     .anyExchange().authenticated();
             })
