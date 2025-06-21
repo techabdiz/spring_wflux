@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Auth {
 
-    private String usernmae;
+    private String username;
     private String password;
 
 }

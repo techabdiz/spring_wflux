@@ -1,33 +1,34 @@
 
-POST http://localhost:8080/auth/login
-
-{
-    "username": "tech.abdiz",
-    "password": "123456"
-}
-
 ###
 GET http://localhost:8080/users/4d650993-5646-4246-a42b-a39cfdef450-b
 ###
 
 GET http://localhost:8080/users
-
-
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXR0X2phY29iIiwiaWF0IjoxNzUwNTE1NDI3LCJleHAiOjE3NTA1MTkwMjd9.qtJfRLmxpxANLHBmfvxYPcjzGdUvgaJvxqQiVzo_YzugX1AbugivMWk2lEvhhejGtGEl9mOdyDrG9V94a96dFw
 ###
 
 GET http://localhost:8080/users/paged?page=0&limit=3
+
+### 
+
+POST  http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "username": "matt_jacob", 
+    "password": "abcefghis"
+}
 
 ###
 POST http://localhost:8080/users/create
 Content-Type: application/json
 
-{   
-    "id": "e9467f1e-6999-4acf-90ba-8d2b27cfd84b",
-    "firstName": "Megan",
-    "lastName": "Fox",
-    "email": "megan.fox@gmail.com",
-    "username": "mega_fox",
-    "password": "99999999"
+{   "id": 25,
+    "firstName": "Matthew",
+    "lastName": "Jacob",
+    "email": "matt_jacob@gmail.com",
+    "username": "matt_jacob",
+    "password": "abcefghis"
 }
 
 ###

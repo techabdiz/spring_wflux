@@ -13,12 +13,14 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class AuthService {
 
+
+    private JwtService jwtService;
     private ReactiveAuthenticationManager authManager;
 
 
     public Mono<Map<String, String>> authenticate(String username, String password) { 
         return authManager.authenticate(
             new UsernamePasswordAuthenticationToken(username, password)
-        ).map(auth -> Map.of("message", "login was successfull !"));
+        ).map(auth -> Map.of("message", jwtService.generateJWT(username)));
     }
 }

@@ -22,7 +22,7 @@ public class GlobExceptionHandler {
             .build());
     }
 
-     @ExceptionHandler(exception = WebExchangeBindException.class)
+    @ExceptionHandler(exception = WebExchangeBindException.class)
     public Mono<ErrorResponse> handleBeanValidations(WebExchangeBindException ex) { 
         return Mono.just(
             ErrorResponse.builder(ex, HttpStatus.INTERNAL_SERVER_ERROR, 
