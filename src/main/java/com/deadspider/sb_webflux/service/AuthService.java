@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class AuthService {
 
-
+    private UserService userService;
     private JwtService jwtService;
     private ReactiveAuthenticationManager authManager;
 
@@ -21,6 +21,10 @@ public class AuthService {
     public Mono<Map<String, String>> authenticate(String username, String password) { 
         return authManager.authenticate(
             new UsernamePasswordAuthenticationToken(username, password)
-        ).map(auth -> Map.of("message", jwtService.generateJWT(username)));
+        ).map(auth -> Map.of("message", jwtService.generateJWT( userService.getEntityByUsername(username)
+                        .map(user->user.getId().toString()).block()
+                    )
+                )
+        );
     }
 }

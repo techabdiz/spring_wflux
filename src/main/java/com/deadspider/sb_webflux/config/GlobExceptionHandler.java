@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,7 +34,13 @@ public class GlobExceptionHandler {
 
     @ExceptionHandler(exception = Exception.class)
     public Mono<ErrorResponse> generalHandler(Exception ex) { 
+        ex.printStackTrace();
         return Mono.just(ErrorResponse.builder(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()).build());
+    }
+
+    @ExceptionHandler(exception = AuthorizationDeniedException.class)
+    public Mono<ErrorResponse> authDenied(Exception e) { 
+        return Mono.just(ErrorResponse.builder(e, HttpStatus.FORBIDDEN, e.getMessage()).build());
     }
 
 }

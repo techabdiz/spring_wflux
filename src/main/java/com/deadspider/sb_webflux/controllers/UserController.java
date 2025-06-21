@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,8 +48,12 @@ public class UserController {
 
 
     @GetMapping("{id}")
+    //@PreAuthorize(value = "authentication.principal.equals(#id)")
+    @PostAuthorize(value = "returnObject.body != null && returnObject.body.id.toString().equals(authentication.principal)")
     public Mono<ResponseEntity<UserDTO>> get(@PathVariable("id") String id) { 
-        return service.getById(id).map(data->ResponseEntity.ok().body(data))
+        return service.getById(id)
+        .doOnNext(System.out::println)
+        .map(data->ResponseEntity.ok().body(data))
         .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
@@ -55,5 +61,6 @@ public class UserController {
     public Flux<UserDTO> getUsers() { 
         return service.getAllUsers();
     }
+
     
 }

@@ -50,9 +50,13 @@ public class UserService implements ReactiveUserDetailsService {
         .map(UserDTO::fromEntity);
     }
 
+    public Mono<User> getEntityByUsername(String username) { 
+        return repo.findByUsername(username);
+    }
+
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return repo.findByUsername(username).map(user->{
+        return getEntityByUsername(username).map(user->{
             return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
                 .password(user.getPassword()).build();
         });
