@@ -2,11 +2,9 @@ package com.deadspider.sb_webflux.controllers;
 
 import java.net.URI;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +33,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public  Mono<ResponseEntity<UserDTO>> create (@RequestBody @Valid Mono<UserDTO> userMono) {
         return service.save(userMono)
-                .map(dto-> ResponseEntity.created(URI.create("users/get?id="+dto.getId())).body(dto));
+                .map(dto-> ResponseEntity.created(URI.create("users/get?id="+dto.getId())).body(dto))
+                .doOnError(e->e.printStackTrace());
         //user.subscribe(data->System.out.println("got user: " + data));
     }
 

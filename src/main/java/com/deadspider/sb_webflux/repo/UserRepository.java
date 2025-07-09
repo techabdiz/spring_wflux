@@ -14,4 +14,5 @@ public interface UserRepository  extends ReactiveCrudRepository<User, UUID>{
 
     Flux<User> findAllBy(Pageable pageable);
     Mono<User> findByUsername(String username);
+    Mono<User> findByEmail(String email);
 }
